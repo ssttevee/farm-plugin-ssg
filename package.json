@@ -1,0 +1,37 @@
+{
+  "name": "farm-plugin-ssg",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./index.js",
+      "require": "./index.js",
+      "import": "./index.js",
+      "types": "./index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepack": "npm run build"
+  },
+  "keywords": [],
+  "author": "ssttevee <stevyo99@yahoo.ca>",
+  "repository": "github:ssttevee/farm-plugin-ssg",
+  "license": "MIT",
+  "dependencies": {
+    "website-archiver-lib": "1.0.0"
+  },
+  "devDependencies": {
+    "@farmfe/core": "^1.1.1",
+    "@types/node": "^20.11.16",
+    "typescript": "^5.6.3"
+  },
+  "files": [
+    "**/*.js",
+    "**/*.d.ts",
+    "**/*.map"
+  ]
+}
