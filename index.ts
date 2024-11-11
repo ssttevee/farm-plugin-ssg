@@ -151,6 +151,8 @@ export default function ssg(options?: SSGOptions): JsPlugin {
   return {
     name: "farm-plugin-ssg",
 
+    priority: 90, // lower than the default 100
+
     finalizeResources: {
       async executor({ resourcesMap }) {
         const entry = Object.values(resourcesMap).find(
