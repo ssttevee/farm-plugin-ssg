@@ -4,6 +4,8 @@ import type {
   Resource,
 } from "@farmfe/core";
 import type { FixExtensionHook, ScrapeLinksHook } from "website-archiver-lib";
+import { defaultExtensionsMap as extsMap } from "website-archiver-lib/extensions";
+import createExtensionFixer from "website-archiver-lib/extensions";
 import path from "node:path";
 import fs from "node:fs";
 import { TempFileManager } from "./temp.js";
@@ -31,6 +33,19 @@ function makeDefaultEntrypointMatcher(name?: string): EntrypointMatcher {
     r.info?.data?.isEntry === true &&
     (!name || r.name === name);
 }
+
+export const defaultExtensionsMap: Record<string, string> = {
+  ...extsMap,
+  "text/css": "css",
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/gif": "gif",
+  "image/svg+xml": "svg",
+  "application/javascript": "js",
+  "text/javascript": "js",
+  "application/json": "json",
+  "text/plain": "txt",
+};
 
 export interface SSGOptions {
   /**
@@ -148,6 +163,10 @@ export default function ssg(options?: SSGOptions): JsPlugin {
     options?.publicdir !== false
       ? path.resolve(options?.publicdir ?? "public")
       : false;
+  const extensionsMap =
+    typeof options?.fixextension === "object"
+      ? options.fixextension
+      : defaultExtensionsMap;
   return {
     name: "farm-plugin-ssg",
 
@@ -171,6 +190,7 @@ export default function ssg(options?: SSGOptions): JsPlugin {
             onfetch: publicWrapFetch(
               publicdir,
               resourcesMap,
+              extensionsMap,
               (options?.getFetch ?? defaultGetFetch)(
                 await import(appjs),
                 resourcesMap,
@@ -178,7 +198,12 @@ export default function ssg(options?: SSGOptions): JsPlugin {
             ),
             concurrency: options?.concurrency,
             scrapelinks: options?.scrapelinks,
-            fixextension: options?.fixextension,
+            fixextension:
+              typeof options?.fixextension === "function"
+                ? options.fixextension
+                : createExtensionFixer(
+                    options?.fixextension ?? defaultExtensionsMap,
+                  ),
             dest: {
               async createWritableStream(pathname) {
                 const chunks: Uint8Array[] = [];
@@ -212,9 +237,6 @@ export default function ssg(options?: SSGOptions): JsPlugin {
   };
 }
 
-export {
-  default as createExtensionFixer,
-  defaultExtensionsMap,
-} from "website-archiver-lib/extensions";
 export { default as createScrapeLinks } from "website-archiver-lib/links";
 export { default as defaultLinkScraperDict } from "website-archiver-lib/links/default";
+export { createExtensionFixer };
