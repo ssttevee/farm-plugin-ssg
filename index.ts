@@ -176,6 +176,9 @@ export default function ssg(options?: SSGOptions): JsPlugin {
                 resourcesMap,
               ),
             ),
+            concurrency: options?.concurrency,
+            scrapelinks: options?.scrapelinks,
+            fixextension: options?.fixextension,
             dest: {
               async createWritableStream(pathname) {
                 const chunks: Uint8Array[] = [];
