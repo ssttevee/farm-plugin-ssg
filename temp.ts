@@ -1,6 +1,11 @@
 import path from "node:path";
 import fs from "node:fs";
 
+// polyfill async dispose
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+Symbol.asyncDispose ??= Symbol("Symbol.asyncDispose");
+
 export class TempFileManager implements AsyncDisposable {
   #dirname: string;
   #files: string[] = [];
