@@ -211,3 +211,10 @@ export default function ssg(options?: SSGOptions): JsPlugin {
     },
   };
 }
+
+export {
+  default as createExtensionFixer,
+  defaultExtensionsMap,
+} from "website-archiver-lib/extensions";
+export { default as createScrapeLinks } from "website-archiver-lib/links";
+export { default as defaultLinkScraperDict } from "website-archiver-lib/links/default";
