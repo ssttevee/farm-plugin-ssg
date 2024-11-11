@@ -5,8 +5,8 @@ importers:
   .:
     dependencies:
       website-archiver-lib:
-        specifier: 1.0.0
-        version: 1.0.0
+        specifier: 1.0.1
+        version: 1.0.1
     devDependencies:
       '@farmfe/core':
         specifier: ^1.1.1
@@ -1873,8 +1873,8 @@ packages:
       defaults: 1.0.4
     dev: true
 
-  /website-archiver-lib@1.0.0:
-    resolution: {integrity: sha512-pYdDypVhK7+eHu7+vkUDz9d0JGEdhQtbDG7rLPAZplMQO2R1/wP6WtsfiMjK3Xs+8oZe8U+yXx4EwPj7Y3wkzA==}
+  /website-archiver-lib@1.0.1:
+    resolution: {integrity: sha512-cZ/xbmxnGh1kZbcmjlJO/w7ni+LGj4QthUZzMGfNrLprUurQ/4gKD/m5LthJXo3EAqvzQ1nrrSnWF0tLSu9+PQ==}
     dependencies:
       path: 0.12.7
     optionalDependencies:

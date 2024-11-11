@@ -22,7 +22,7 @@
   "repository": "github:ssttevee/farm-plugin-ssg",
   "license": "MIT",
   "dependencies": {
-    "website-archiver-lib": "1.0.0"
+    "website-archiver-lib": "1.0.1"
   },
   "devDependencies": {
     "@farmfe/core": "^1.1.1",
