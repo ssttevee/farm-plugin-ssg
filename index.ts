@@ -150,6 +150,14 @@ export interface SSGOptions {
         string,
         (body: ReadableStream<Uint8Array>) => Promise<Iterable<string>>
       >;
+
+  /**
+   * A callback to modify the script content before it is executed.
+   *
+   * This can be used to transform scripts before they are run. This is useful
+   * for modifying scripts that are not intended to be run in node.
+   */
+  onscript?: (script: string) => string | Promise<string>;
 }
 
 /**
@@ -183,7 +191,11 @@ export default function ssg(options?: SSGOptions): JsPlugin {
           await using tmp = new TempFileManager("node_modules/.farm/ssg");
 
           const appjs = await tmp.create("app.mjs");
-          await fs.promises.writeFile(appjs, Uint8Array.from(entry.bytes));
+          const script = new TextDecoder().decode(Uint8Array.from(entry.bytes));
+          await fs.promises.writeFile(
+            appjs,
+            (await options?.onscript?.(script)) ?? script,
+          );
 
           await downloadResources("http://localhost", {
             entrypaths: options?.entrypaths,

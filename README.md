@@ -44,3 +44,4 @@ Please refer to the typescript definitions for more in-depth information.
 - `getFetch` - A callback to get the fetch function from a module.
 - `fixextension` - A callback to add missing file extensions to pathnames.
 - `scrapelinks` - A callback to discover links from the body of a response to be further generated.
+- `onscript` - A callback to modify the script content before it is executed.
